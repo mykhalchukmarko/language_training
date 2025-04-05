@@ -1,17 +1,10 @@
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #003535 45%, #00292B 60%);
+    background-color: #003535;
     color: #96CBCA;
     text-align: center;
-}
-
-.container {
-    width: 90%;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
@@ -22,6 +15,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 th, td {
@@ -30,24 +24,5 @@ th, td {
 }
 
 th {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-tbody tr:nth-child(odd) {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-tbody tr:nth-child(1) {
-    background: gold;
-    color: black;
-}
-
-tbody tr:nth-child(2) {
-    background: silver;
-    color: black;
-}
-
-tbody tr:nth-child(3) {
-    background: #cd7f32;
-    color: black;
+    background-color: #004B4B;
 }
