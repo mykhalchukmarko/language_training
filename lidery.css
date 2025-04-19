@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .game-end {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  input, button {
+    padding: 10px 15px;
+    margin: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+  }
+  
+  button {
+    background-color: #5f27cd;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  button:hover {
+    background-color: #4e18a6;
+  }
+  
+  .leaderboard {
+    background: linear-gradient(145deg, #0f2e2d, #0a1e1e);
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    padding: 20px;
+    max-width: 90vw;
+    width: 600px;
+    color: #d0f0e0;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  .logika-tag {
+    background-color: #a259ff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+  }
+  
+  th, td {
+    padding: 12px 10px;
+    text-align: center;
+  }
+  
+  th {
+    color: #d0f0e0;
+    font-weight: bold;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  @media (max-width: 600px) {
+    .leaderboard {
+      width: 95vw;
+      padding: 15px;
+    }
+  
+    .header h1 {
+      font-size: 1.2rem;
+    }
+  
+    .logika-tag {
+      font-size: 0.9rem;
+      padding: 6px 10px;
+    }
+  
+    th, td {
+      padding: 8px 6px;
+      font-size: 0.9rem;
+    }
+  }

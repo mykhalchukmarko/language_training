@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="lidery.css" />
+</head>
+<body>
+  <div class="game-end">
+    <h2>Гра закінчена!</h2>
+    <input type="text" id="username" placeholder="Введите имя" />
+    <button onclick="showLeaderboard()">Показати таблицю лідерів</button>
+  </div>
+
+  <div id="leaderboard" class="leaderboard hidden">
+    <div class="header">
+      <h1>LEADERBOARD</h1>
+      <div class="logika-tag">Logika</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>RANK</th>
+          <th>TEAM</th>
+          <th>GROUP</th>
+          <th>POINTS</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body">
+      </tbody>
+    </table>
+  </div>
+
+  <script src="lidery.js"></script>
+</body>
+</html>
