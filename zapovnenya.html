@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grammar Test</title>
+  <style>
+    body {
+      margin: 0; font-family: Arial; background: #e7e0de;
+      display: flex; justify-content: center; align-items: center; height: 100vh;
+    }
+    .container {
+      background: #f1e9e7; padding: 20px; border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 600px; text-align: center;
+      transition: background 0.5s;
+    }
+    .header { background: #ffd9b3; padding: 10px; border-radius: 5px; font-weight: bold; }
+    .instruction { font-size: 12px; color: #888; }
+    .task {
+      background: #d9d0cc; padding: 20px; margin: 15px 0;
+      border-radius: 8px; color: #aa6c39; font-size: 18px;
+    }
+    input {
+      width: 150px; padding: 8px; font-size: 16px;
+      border: 1px solid #bbb; border-radius: 5px;
+    }
+    .controls {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 10px; margin-top: 10px;
+    }
+    button {
+      padding: 8px 12px; font-size: 14px;
+      border: 1px solid #ccc; border-radius: 5px;
+      background: #f5f3f3; cursor: pointer;
+    }
+    button:hover { background: #e0dcdc; }
+    .feedback { margin-top: 10px; font-size: 18px; font-weight: bold; }
+    .correct { color: green; } .incorrect { color: red; }
+    .score-board { margin-top: 15px; text-align: right; font-weight: bold; }
+    .hidden { display: none; } .disabled { background: #ddd; cursor: not-allowed; }
+    #results { text-align: left; margin-top: 20px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <div class="header">Fill in the blanks <div class="instruction">Type the correct word in each gap.</div></div>
+    <div class="task" id="question">Loading...</div>
+    <div class="controls">
+      <button onclick="checkAnswer()" class="check-btn">Check ✓</button>
+      <button onclick="nextQuestion()" class="next-btn hidden">Next »</button>
+      <button onclick="showHint()" class="hint-btn">Hint 💡</button>
+      <button onclick="showResults()" class="show-all-btn hidden">Check Answers 📋</button>
+    </div>
+    <div id="feedback" class="feedback"></div>
+    <div id="score" class="score-board">0/10 points</div>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {text: "Yesterday, I ___ (go) to the cinema.", answer: "went", hint: "Past simple of 'go'."},
+      {text: "She ___ (study) when I called.", answer: "was studying", hint: "Past continuous."},
+      {text: "They ___ (not finish) the project yet.", answer: "haven't finished", hint: "Present perfect negative."},
+      {text: "I ___ (eat) when the phone rang.", answer: "was eating", hint: "Past continuous."},
+      {text: "He ___ (live) in Paris since 2010.", answer: "has lived", hint: "Present perfect."},
+      {text: "We ___ (play) football every weekend.", answer: "play", hint: "Present simple."},
+      {text: "___ you ___ (see) that movie?", answer: "have seen", hint: "Present perfect question."},
+      {text: "I ___ (not like) broccoli as a child.", answer: "didn't like", hint: "Past simple negative."},
+      {text: "She ___ (write) five books so far.", answer: "has written", hint: "Present perfect."},
+      {text: "We ___ (go) to the beach last summer.", answer: "went", hint: "Past simple."}
+    ].sort(() => Math.random() - 0.5);
+
+    let index = 0, points = 0, hints = 2, userAnswers = [];
+
+    function loadQuestion() {
+      if (index >= 10) return finishQuiz();
+      const q = questions[index].text.replace(/___/g, "<input type='text' class='answer'>");
+      document.getElementById('question').innerHTML = q;
+      document.getElementById('feedback').textContent = '';
+      document.querySelector('.check-btn').classList.remove('disabled');
+      document.querySelector('.next-btn').classList.add('hidden');
+      if (hints <= 0) document.querySelector('.hint-btn').classList.add('hidden');
+    }
+
+    function checkAnswer() {
+      const inputs = document.querySelectorAll('.answer');
+      const user = [...inputs].map(i => i.value.trim().toLowerCase()).join(" ");
+      const correct = questions[index].answer.toLowerCase();
+      inputs.forEach(i => i.disabled = true);
+      document.querySelector('.check-btn').classList.add('disabled');
+      const fb = document.getElementById('feedback');
+      if (user === correct) {
+        fb.textContent = "Correct!"; fb.className = "feedback correct"; points++; updateBg();
+      } else {
+        fb.innerHTML = "Incorrect! <span class='incorrect'>Try again!</span>"; fb.className = "feedback incorrect";
+      }
+      userAnswers.push({q: questions[index].text, your: user, correct});
+      updateScore();
+      document.querySelector('.next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() { index++; loadQuestion(); }
+
+    function showHint() {
+      if (hints > 0) {
+        alert(questions[index].hint); hints--;
+        if (hints <= 0) document.querySelector('.hint-btn').classList.add('hidden');
+      }
+    }
+
+    function updateScore() {
+      document.getElementById('score').textContent = `${points}/10 points`;
+    }
+
+    function updateBg() {
+      document.getElementById('container').style.backgroundColor = `hsl(30, 50%, ${90 + points}%)`;
+    }
+
+    function finishQuiz() {
+      document.getElementById('question').innerHTML = "Quiz Completed!";
+      document.getElementById('feedback').textContent = `Your score: ${points}/10`;
+      document.querySelector('.check-btn').classList.add('hidden');
+      document.querySelector('.next-btn').classList.add('hidden');
+      document.querySelector('.hint-btn').classList.add('hidden');
+      document.querySelector('.show-all-btn').classList.remove('hidden');
+    }
+
+    function showResults() {
+      const res = userAnswers.map((a, i) =>
+        `${i+1}. ${a.q.replace(/___/g, "_____")}<br>➤ Your: <strong>${a.your}</strong><br>✅ Correct: <strong>${a.correct}</strong><br><br>`
+      ).join('');
+      document.getElementById('results').innerHTML = "<strong>Your Answers:</strong><br><br>" + res;
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>

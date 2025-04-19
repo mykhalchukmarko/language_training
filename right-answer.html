@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Переклад слів</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+  <link rel = "stylesheet" href = "lalala.css">
+</head>
+<body>
+  <div class="container">
+    <h3 class="container_h3">Натисни, щоб розпочати гру!</h3>
+    <div class="button">🚀 Почати</div>
+
+    <div class="main">
+      <div class="question"></div>
+      <div class="spysok">
+        <div class="answer"></div>
+        <div class="answer"></div>
+        <div class="answer"></div>
+        <div class="answer"></div>
+        <div class="answer"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>let words = {
+    "кіт": "cat",
+    "собака": "dog",
+    "молоко": "milk",
+    "вода": "water",
+    "книга": "book",
+    "вікно": "window",
+    "ручка": "pen",
+    "стіл": "table",
+    "друг": "friend",
+    "дім": "house"
+  };
+
+  let ukWords = Object.keys(words);
+  let enWords = Object.values(words);
+
+  let h3 = document.querySelector('.container_h3');
+  let button = document.querySelector('.button');
+  let main = document.querySelector('.main');
+  let question = document.querySelector('.question');
+  let answer_buttons = document.querySelectorAll('.answer');
+
+  let correct_answers_given = 0;
+  let total_answers_given = 0;
+  let current_question;
+
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
+
+  class Question {
+    constructor() {
+      this.ukrWord = ukWords[Math.floor(Math.random() * ukWords.length)];
+      this.correct = words[this.ukrWord];
+
+      let wrongAnswers = [];
+      while (wrongAnswers.length < 4) {
+        let randomWord = enWords[Math.floor(Math.random() * enWords.length)];
+        if (randomWord !== this.correct && !wrongAnswers.includes(randomWord)) {
+          wrongAnswers.push(randomWord);
+        }
+      }
+
+      this.answers = shuffle([this.correct, ...wrongAnswers]);
+    }
+
+    display() {
+      question.innerHTML = `Переклад слова: <span style="color: #ffe082">${this.ukrWord}</span>`;
+      for (let i = 0; i < this.answers.length; i++) {
+        answer_buttons[i].innerHTML = this.answers[i];
+        answer_buttons[i].style.backgroundColor = "rgba(255,255,255,0.15)";
+      }
+    }
+  }
+
+  button.addEventListener('click', function () {
+    main.style.display = 'flex';
+    button.style.display = 'none';
+
+    current_question = new Question();
+    current_question.display();
+    correct_answers_given = 0;
+    total_answers_given = 0;
+
+    setTimeout(function () {
+      main.style.display = 'none';
+      button.style.display = 'inline-block';
+      h3.innerHTML = `✅ Правильних відповідей: <strong>${correct_answers_given}</strong> з <strong>${total_answers_given}</strong><br>
+      🎯 Точність: <strong>${total_answers_given > 0 ? Math.round(correct_answers_given * 100 / total_answers_given) : 0}%</strong>`;
+    }, 30000); 
+  });
+
+  for (let i = 0; i < answer_buttons.length; i++) {
+    answer_buttons[i].addEventListener('click', function () {
+      if (answer_buttons[i].innerHTML === current_question.correct) {
+        correct_answers_given++;
+        answer_buttons[i].style.backgroundColor = "#81c784";
+      } else {
+        answer_buttons[i].style.backgroundColor = "#e57373";
+      }
+
+      total_answers_given++;
+      setTimeout(() => {
+        current_question = new Question();
+        current_question.display();
+      }, 500);
+    });
+}</script>
+</body>
+</html>

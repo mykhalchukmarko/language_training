@@ -1,0 +1,257 @@
+сырники, [19.04.2025 12:51]
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        [class *="__container"] {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .header {
+            background: #D0CAC5;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            border-bottom: 2px solid #000;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            height: 72px;
+        }
+
+        .nav__menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .menu__link {
+            padding: 8px 30px;
+            border-radius: 100px;
+            background: #ADCAE8;
+            color: #000;
+            transition: 300ms linear;
+        }
+
+        .menu__link:hover {
+            background: #85CCC6;
+        }
+
+        .games {
+            margin-top: 150px;
+        }
+
+        .section__name {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 30px;
+        }
+
+        .game__menu {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .game__list {
+            width: 380px;
+            height: 380px;
+            cursor: pointer;
+        }
+
+        .game__img {
+            height: 100%;
+            width: 100%;
+            border-radius: 30px;
+            object-fit: cover;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f2f2f2;
+        }
+
+        .header {
+            background: #D0CAC5;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            border-bottom: 2px solid #000;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .nav__menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu__link {
+            padding: 8px 20px;
+            border-radius: 100px;
+            background: #ADCAE8;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .menu__link:hover {
+            background: #85CCC6;
+        }
+
+        .games {
+            margin-top: 100px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+        }
+
+        .section__name {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .game__menu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .game__list {
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .game__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .word-popup {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      border: 2px solid #000;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <nav class="nav nav__container">
+                <img src="./img/logo.png" alt="" class="logo">
+                <ul class="nav__menu">
+                    <li class="menu__list">
+                        <a href="lidery.html" class="menu__link login__btn">Список лідерів</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="word-popup" id="word-popup"></div>
+
+        <main class="main">
+            <section class="games games__container">
+                <h2 class="section__name">Games you can play:</h2>
+                <ul class="game__menu">
+                    <li class="game__list">
+                        <a href = "zapovnenya.html">
+                        <img src="./img/pereklad.png" alt="" class="game__img">
+                    </a>
+                    </li>
+                    <li class="game__list">
+                        <a href = "right-answer.html">
+                        <img src="./img/propysk.png" alt="" class="game__img">
+                    </a>
+                    </li>
+                    <li class="game__list">
+                        <a href="pytannya-vidpovid.html">
+                        <img src="./img/pytannya.png" alt="" class="game__img">
+                    </a>
+                    </li>
+                    <li class="game__list">
+                        <a href = "slovo.html">
+                        <img src="./img/right_answer.png" alt="" class="game__img">
+                    </a>
+                    </li>
+                    <li class="game__list">
+                        <img src="./img/pytannya.png" alt="" class="game__img">
+                    </li>
+                    <li class="game__list">
+                        <img src="./img/propysk.png" alt="" class="game__img">
+                    </li>
+
+                    </li>
+
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+      const words = [
+        "resilience", "curiosity", "creativity", "focus", "gratitude", "ambition", "growth", "wisdom"
+      ];
+      const randomWord = words[Math.floor(Math.random() * words.length)];
+      const popup = document.getElementById("word-popup");
+      popup.innerText = `Word of the day: ${randomWord}`;
+    });
+    </script>
+</body>
+
+</html>

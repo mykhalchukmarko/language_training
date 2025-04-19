@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вивчення англійської: гра питання-відповідь</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .golovniy {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .container_h3 {
+            margin-bottom: 20px;
+            color: #3498db;
+            font-size: 22px;
+            line-height: 1.5;
+        }
+        
+        .button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+        }
+        
+        .button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        .main {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .level-indicator {
+            background-color: #f39c12;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .question {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .input-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #answerInput {
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        #answerInput:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        #submitAnswer {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+            max-width: 200px;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+        }
+        
+        #submitAnswer:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        #submitAnswer:active {
+            transform: translateY(0);
+        }
+        
+        .feedback-container {
+            margin-top: 20px;
+            width: 100%;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            display: none;
+        }
+        
+        .correct-answer {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .vocabulary {
+            background-color: #ebf5fb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: left;
+        }
+        
+        .vocabulary h4 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .vocabulary ul {
+            padding-left: 20px;
+        }
+        
+        .vocabulary li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .timer {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .result-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            margin-top: 15px;
+            width: 100%;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            height: 10px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #3498db;
+            width: 0;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="golovniy">
+        <h3 class="container_h3">Покращуйте свою англійську мову відповідаючи на запитання!</h3>
+        <div class="button">Почати</div>
+    </div>
+
+    <div class="main">
+        <div class="level-indicator">Початковий рівень</div>
+        <div class="question">What is your favorite hobby?</div>
+        <div class="input-wrapper">
+            <input type="text" id="answerInput" placeholder="Введіть вашу відповідь англійською">
+            <button id="submitAnswer">Перевірити</button>
+            
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <div class="timer">Питання <span id="currentQuestion">1</span> з <span id="totalQuestions">6</span></div>
+        </div>
+        
+        <div class="feedback-container">
+            <div class="correct-answer">Приклад відповіді:</div>
+            <div class="sample-answer"></div>
+            <div class="vocabulary">
+                <h4>Корисна лексика:</h4>
+                <ul class="vocab-list"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script>
+        // DOM-елементи
+        let golovnyi = document.querySelector('.golovniy');
+        let main = document.querySelector('.main');
+        let h3 = document.querySelector('.container_h3');
+        let button = document.querySelector('.button');
+        let levelIndicator = document.querySelector('.level-indicator');
+        let question = document.querySelector('.question');
+        let answerInput = document.getElementById('answerInput');
+        let submitAnswer = document.getElementById('submitAnswer');
+        let feedbackContainer = document.querySelector('.feedback-container');
+        let sampleAnswer = document.querySelector('.sample-answer');
+        let vocabList = document.querySelector('.vocab-list');
+        let currentQuestionEl = document.getElementById('currentQuestion');
+        let totalQuestionsEl = document.getElementById('totalQuestions');
+        let progressBar = document.querySelector('.progress');
+        
+        // Змінні стану
+        let currentQuestionIndex = 0;
+        let questionsAnswered = 0;
+
+        // Питання для гри
+        const questions = [
+            {
+                level: "Початковий рівень",
+                text: "What is your favorite season of the year and why?",
+                sampleAnswer: "My favorite season is summer. I love warm weather and longer days. In summer, I can swim in the sea and spend more time outdoors. I also enjoy summer fruits like watermelon and strawberries.",
+                vocabulary: [
+                    "<strong>Season (n)</strong> - пора року",
+                    "<strong>Warm weather</strong> - тепла погода",
+                    "<strong>Outdoors</strong> - на відкритому повітрі, на природі",
+                    "<strong>Spend time</strong> - проводити час"
+                ]
+            },
+            {
+                level: "Початковий рівень",
+                text: "Could you describe your morning routine?",
+                sampleAnswer: "Every morning, I wake up at 7 AM. First, I brush my teeth and wash my face. Then I make a cup of coffee and have breakfast. After breakfast, I get dressed and check my emails. I usually leave for work at around 8:30 AM.",
+                vocabulary: [
+                    "<strong>Morning routine</strong> - ранковий розпорядок",
+                    "<strong>Wake up</strong> - прокидатися",
+                    "<strong>Brush teeth</strong> - чистити зуби",
+                    "<strong>Get dressed</strong> - одягатися"
+                ]
+            },
+            {
+                level: "Середній рівень",
+                text: "If you could travel anywhere in the world, where would you go and why?",
+                sampleAnswer: "If I could travel anywhere, I would probably choose Japan. I'm fascinated by the unique blend of ancient traditions and ultra-modern technology there. I would love to explore Tokyo's vibrant neighborhoods, visit historic temples in Kyoto, and experience the beautiful cherry blossom season. The cuisine also appeals to me greatly.",
+                vocabulary: [
+                    "<strong>Fascinated (adj)</strong> - зачарований",
+                    "<strong>Blend (n)</strong> - поєднання",
+                    "<strong>Ultra-modern</strong> - ультрасучасний",
+                    "<strong>Vibrant (adj)</strong> - яскравий, жвавий",
+                    "<strong>Appeals to me</strong> - приваблює мене"
+                ]
+            },
+            {
+                level: "Середній рівень",
+                text: "What do you think are the advantages and disadvantages of social media?",
+                sampleAnswer: "Social media has several advantages, such as connecting people across the globe and providing instant access to information. It's also useful for business promotion and raising awareness about important issues. However, there are significant downsides too. It can be addictive and time-consuming, may contribute to mental health problems, and there are serious privacy concerns. Additionally, the spread of misinformation is a growing problem.",
+                vocabulary: [
+                    "<strong>Advantages/disadvantages</strong> - переваги/недоліки",
+                    "<strong>Connecting people</strong> - з'єднання людей",
+                    "<strong>Instant access</strong> - миттєвий доступ",
+                    "<strong>Raising awareness</strong> - підвищення обізнаності",
+                    "<strong>Downsides (n)</strong> - негативні сторони",
+                    "<strong>Addictive (adj)</strong> - той, що викликає залежність",
+                    "<strong>Time-consuming</strong> - той, що потребує багато часу",
+                    "<strong>Misinformation (n)</strong> - дезінформація"
+                ]
+            },
+            {
+                level: "Просунутий рівень",
+                text: "How might artificial intelligence shape the future of work and education?",
+                sampleAnswer: "Artificial intelligence is likely to fundamentally transform both work and education. In the workplace, routine tasks will increasingly be automated, potentially displacing certain jobs while creating new roles that require collaboration with AI systems. This shift will demand workers to develop more creative, social, and analytical skills that complement rather than compete with automation. In education, AI could enable truly personalized learning paths tailored to individual students' needs, strengths, and weaknesses. Adaptive learning systems might provide real-time feedback and adjust difficulty levels automatically.",
+                vocabulary: [
+                    "<strong>Fundamentally transform</strong> - докорінно змінювати",
+                    "<strong>Displace (v)</strong> - витісняти",
+                    "<strong>Complement rather than compete</strong> - доповнювати, а не конкурувати",
+                    "<strong>Personalized learning paths</strong> - персоналізовані шляхи навчання",
+                    "<strong>Adaptive systems</strong> - адаптивні системи"
+                ]
+            },
+            {
+                level: "Просунутий рівень",
+                text: "In what ways have cultural attitudes toward environmental protection changed in recent decades?",
+                sampleAnswer: "Cultural attitudes toward environmental protection have undergone a remarkable evolution in recent decades. What was once considered a fringe concern has increasingly moved into mainstream consciousness. The discourse has shifted from viewing environmental issues as localized problems to recognizing them as interconnected global challenges requiring collective action. Public awareness has been heightened by more visible climate change impacts, extensive media coverage, and social media campaigns.",
+                vocabulary: [
+                    "<strong>Undergone an evolution</strong> - зазнали еволюції",
+                    "<strong>Fringe concern</strong> - маргінальне питання",
+                    "<strong>Mainstream consciousness</strong> - загальна свідомість",
+                    "<strong>Interconnected challenges</strong> - взаємопов'язані виклики",
+                    "<strong>Collective action</strong> - колективні дії"
+                ]
+            }
+        ];
+
+        // Оновити загальну кількість питань
+        totalQuestionsEl.textContent = questions.length;
+
+        // Функції
+        function displayQuestion(index) {
+            const q = questions[index];
+            levelIndicator.textContent = q.level;
+            question.textContent = q.text;
+            answerInput.value = "";
+            answerInput.focus();
+            
+            // Оновлюємо індикатор прогресу
+            currentQuestionEl.textContent = index + 1;
+            progressBar.style.width = `${(index / questions.length) * 100}%`;
+            
+            // Ховаємо зворотній зв'язок для нового питання
+            feedbackContainer.style.display = 'none';
+        }
+
+        function showFeedback(index) {
+            const q = questions[index];
+            sampleAnswer.textContent = q.sampleAnswer;
+            
+            // Очищаємо список слів
+            vocabList.innerHTML = '';
+            
+            // Додаємо словник
+            q.vocabulary.forEach(word => {
+                const li = document.createElement('li');
+                li.innerHTML = word;
+                vocabList.appendChild(li);
+            });
+            
+            // Показуємо зворотній зв'язок
+            feedbackContainer.style.display = 'block';
+            
+            // Анімуємо появу
+            anime({
+                targets: feedbackContainer,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 500,
+                easing: 'easeOutCubic'
+            });
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= questions.length) {
+                endGame();
+                return;
+            }
+            
+            displayQuestion(currentQuestionIndex);
+        }
+
+        function endGame() {
+            main.style.display = 'none';
+            golovnyi.style.display = 'block';
+            h3.innerHTML = `Вітаємо! Ви завершили всі питання.<br>Продовжуйте практикуватися, щоб покращити вашу англійську.`;
+            button.textContent = 'Спробувати ще раз';
+        }
+
+        // Події
+        button.addEventListener('click', function() {
+            golovnyi.style.display = 'none';
+            main.style.display = 'flex';
+            
+            currentQuestionIndex = 0;
+            questionsAnswered = 0;
+            displayQuestion(currentQuestionIndex);
+            
+            anime({
+                targets: main,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 500,
+                easing: 'easeOutCubic'
+            });
+        });
+
+        submitAnswer.addEventListener('click', function() {
+            if (answerInput.value.trim() === '') {
+                // Якщо поле порожнє, показуємо підказку
+                answerInput.style.borderColor = '#e74c3c';
+                setTimeout(() => {
+                    answerInput.style.borderColor = '#e0e0e0';
+                }, 1000);
+                return;
+            }
+            
+            questionsAnswered++;
+            
+            // Показуємо зразкову відповідь
+            showFeedback(currentQuestionIndex);
+            
+            // Змінюємо напис на кнопці
+            if (currentQuestionIndex === questions.length - 1) {
+                submitAnswer.textContent = 'Завершити';
+            } else {
+                submitAnswer.textContent = 'Наступне питання';
+            }
+            
+            // Змінюємо обробник події для кнопки
+            submitAnswer.removeEventListener('click', submitAnswerHandler);
+            submitAnswer.addEventListener('click', function nextQuestionHandler() {
+                nextQuestion();
+                submitAnswer.textContent = 'Перевірити';
+                submitAnswer.removeEventListener('click', nextQuestionHandler);
+                submitAnswer.addEventListener('click', submitAnswerHandler);
+            });
+        });
+        
+        // Зберігаємо обробник в змінній для можливості його видалення
+        const submitAnswerHandler = submitAnswer.onclick;
+        
+        // Додаємо обробник натискання Enter у полі вводу
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitAnswer.click();
+            }
+        });
+    </script>
+</body>
+</html>
