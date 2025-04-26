@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Слово–переклад</title>
+  <link rel="stylesheet" href="style2.css" />
+</head>
+<body>
+  <!-- Стартовий екран -->
+  <div id="start-screen">
+    <button id="start-button">▶</button>
+  </div>
+
+  <!-- Екран гри -->
+  <div id="game-screen" class="hidden">
+    <div class="top-bar">
+      <div id="score">Бали: 0</div>
+      <div id="timer">Час: 0 сек</div>
+    </div>
+    <div id="question-container">
+      <div id="word">Слово</div>
+      <div class="answers">
+        <button class="answer blue"></button>
+        <button class="answer green"></button>
+        <button class="answer red"></button>
+        <button class="answer yellow"></button>
+      </div>
+    </div>
+    <div class="navigation">
+      <button id="prev-btn">←</button>
+      <span id="progress">Питання 1 з 15</span>
+      <button id="next-btn">→</button>
+    </div>
+  </div>
+
+  <!-- Екран завершення гри -->
+  <div id="end-screen" class="hidden">
+    <h2>Гру завершено!</h2>
+    <button id="restart-btn">Грати знову</button>
+    <button id="leaderboard-btn">Таблиця лідерів</button>
+  </div>
+
+  <script src="slovo.js"></script>
+</body>
+</html>
